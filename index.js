@@ -1,36 +1,21 @@
-require("dotenv").config();
-const connetctToMongo = require("./db_connect");
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-connetctToMongo();
+import React from "react";
+import ReactDOM from "react-dom";
+import { NoteState } from "./context/note/NoteContext";
+import { AuthState } from "./context/auth/AuthContext";
+import "./index.css";
+import App from "./App";
 
-const app = express();
-app.use(cors());
+ReactDOM.render(
+  <React.StrictMode>
+    <AuthState>
+      <NoteState>
+        <App />
+      </NoteState>
+    </AuthState>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
 
-app.use(express.json());
-
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/note", require("./routes/note"));
-
-// Step 2 - Heroku
-const port = process.env.PORT || 5000;
-
-// ------- Deployment --------------
-const __dirname1 = path.resolve();
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "frontend/build")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
-  });
-} else {
-  app.get("/", (req, res) => {
-    res.send("App is Under Maintenance, please try after some time!");
-  });
-}
-// ------- Deployment --------------
-
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
