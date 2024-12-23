@@ -41,10 +41,6 @@ To run this project, you will need to add the following environment variables to
 
 `NODE_ENV`
 
-# Hi, I'm Devansh!
-
-- `Full Stack Web Developer`
-- `MERN Stack Developer`
 
 ## Skills
 
